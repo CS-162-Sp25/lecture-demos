@@ -26,8 +26,32 @@ double prompt_for_double() {
 	std::cout << "Hi" << std::endl; // Dead code
 }
 
+// A "scope" is loosely a pair of curly braces
+
+// This x is "scoped" to the change_me function
+void change_me(int x) {
+	x = 5;
+}
+
 // main is the "entrypoint" of a c++ program
 int main() {
+	std::cout << y << std::endl; // This is illegal
+
+	// This x is "scoped" to the main function
+	int x = 12;
+
+	{
+		x = 1000;
+		std::cout << x << std::endl; // Prints: 1000
+		int x = 100; // This is allowed. It "shadows" the previous x
+		std::cout << x << std::endl; // Prints: 100
+	}
+
+	std::cout << x << std::endl; // Prints 1000
+
+	change_me(x);
+	std::cout << x << std::endl; // Prints: 1000
+
 	// This is where the program starts
 	// cout stands for "console output"
 	//
@@ -152,8 +176,10 @@ int main() {
 
 	// TODO Arrays
 	// An array is a homogeneous fixed-size sequence of values
-	bool array_of_booleans[12];
-	
+	// The size of an automatic array must be a compile-time constant
+	constexpr int n = 10;
+	bool array_of_booleans[n];
+
 	array_of_booleans[11] = true;
 	
 

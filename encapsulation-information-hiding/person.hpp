@@ -8,4 +8,13 @@ struct person {
 	int age;
 };
 
+/*
+ * Block comments explain INTERFACE
+ * Function: print_person
+ * Parameters: 
+ *
+ */
+void print_person(const person& p);
+
+
 #endif

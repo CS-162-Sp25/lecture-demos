@@ -1,0 +1,8 @@
+Circular includes / cyclical includes / circular dependencies
+
+main.cpp ->
+a.hpp -> b.hpp -> c.hpp -> a.hpp
+
+a.hpp -> b.hpp -> c.hpp -> d.hpp
+a.hpp -> d.hpp
+

@@ -1,51 +1,42 @@
 #include <fstream>
-#include <iostream>
 
 #include "person.hpp"
 
-// Definitions...
-// Coupling: Changing one line of code requires changing another line of code
-// Code that has a high degree of coupling is hard to maintain.
+// Coupling: Needing to change multiple components of code together in order to
+// 		facilitate a change in a feature
+// Encapsulation: Bundling of data with the behavior that operates on that data
 
-// Coupling is inevitable. Coupling occurs AT LEAST anywhere there are
-// dependencies.
+// Dependencies: When one component of code "uses" another component of code,
+// 	or "relies on" another component of code
 
-// Dependency: Is when one component of code "uses" another component of code
+// Information-hiding: The hiding of information. The isolation of information
+// within a component of code, or a "module"
 
-// Encapsulation: Bundling data and behavior that operates on that data
-
-// Interface: The part of a component of code that describes the "what" of
-// 	that component
-// Contract: 
-// Implementation: The part of a component of code that describes the "how"
-// 	of that component
-
-// SRP: Every component of code should have a single responsibility
-// SOLID
-
-// Refactoring: Change the structure of the code without changing its semantics
-// Extraction: Separate some functionality into its own component
 
 void some_function() {
-	std::ifstream person_file("person.txt");
-	if (person_file.fail()) {
-		std::cout << "Failed to open person.txt!" << std::endl;
-		return;
-	}
+	std::ifstream the_file;
+	the_file.open("data.txt");
+	std::string name;
+	int age;
+	the_file >> name;
+	the_file >> age;
 
 	person p;
-	person_file >> p.name;
-	person_file >> p.age;
-
-	print_person(p);
+	p.set_name(name);
+	p.set_age(age);
+	p.print();
 }
 
 int main() {
 	person jane;
-	jane.name = "Jane";
-	jane.age = 32;
-
-	print_person(jane);
+	jane.set_name("Jane");
+	jane.set_age(24);
+	
+	jane.print();
 
 	some_function();
+
+	if (jane.get_name() == "Jane") {
+		// jane.name is Jane!
+	}
 }

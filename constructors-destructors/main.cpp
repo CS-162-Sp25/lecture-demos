@@ -8,6 +8,11 @@
 // if no constructors have been explicitly declared for that class.
 // It does nothing.
 
+// The Big Three are:
+// Destructors
+// Copy constructors
+// Copy assignment operator overloads (assignment operator overloads, AOO)
+
 // What is the purpose of a destructor?
 // A: To "tear down" an object
 //
@@ -31,7 +36,7 @@ pet::pet(const std::string& name, int age) : name(name), age(age) {
 // Member variables denote a "has-a" relationship
 class pet_owner {
 private:
-	const int num_pets;
+	int num_pets;
 	std::string* pet_names;
 	pet favorite_pet;
 public:
@@ -39,6 +44,8 @@ public:
 	// pet_owner(); // Default constructor: Constructor with no parameters
 	pet_owner();
 	pet_owner(int num_pets); // Nondefault constructor: Constructor with parameters
+	pet_owner(const pet_owner& other); // Copy constructor
+	pet_owner& operator=(const pet_owner& other);
 
 	~pet_owner(); // Destructor
 };
@@ -60,9 +67,42 @@ pet_owner::pet_owner(int num_pets) : num_pets(num_pets), pet_names(new std::stri
 	std::cout << "Nondefault constructor!" << std::endl;
 }
 
+pet_owner::pet_owner(const pet_owner& other) :
+		num_pets(other.num_pets),
+		pet_names(new std::string[other.num_pets]),
+		favorite_pet(other.favorite_pet) {
+	for (int i = 0; i < this->num_pets; i++) {
+		this->pet_names[i] = other.pet_names[i];
+	}
+	std::cout << "Copy constructor!" << std::endl;
+}
+
 pet_owner::~pet_owner() {
 	delete [] this->pet_names;
+	std::cout << "Destructor!" << std::endl;
 }
+
+pet_owner& pet_owner::operator=(const pet_owner& other) {
+	if (this == &other) {
+		return *this;
+	}
+
+	this->num_pets = other.num_pets;
+	delete [] this->pet_names;
+	this->pet_names = new std::string[other.num_pets];
+	this->favorite_pet = other.favorite_pet; // This line of code calls the AOO of the pet class. That's fine.
+	for (int i = 0; i < this->num_pets; i++) {
+		this->pet_names[i] = other.pet_names[i];
+	}
+	std::cout << "AOO!" << std::endl;
+
+	return *this;
+}
+
+
+// Any time you create a class with a member variable that is a pointer
+// that is meant to point to dynamic memory, you should create the big 3
+// for that class to manages that dynamic memory
 
 // main.cpp
 int main() {
@@ -79,4 +119,36 @@ int main() {
 	std::cin >> n;
 	pet_owner* owners_heap = new pet_owner[n];
 	*/
+
+	pet_owner p3 = p2;
+	// Copies member variables from p2 to p3
+	
+	// Shallow copy
+	// pet_owner p3;
+	// p3.num_pets = p2.num_pets;
+	// p3.pet_names = p2.pet_names;
+	// // p3.favorite_pet = p2.favorite_pet;
+	// 	p3.favorite_pet.name = p2.favorite_pet.name;
+	// 	p3.favorite_pet.age = p2.favorite_pet.age;
+	
+	// This is problematic
+	
+	// Problem 1: If we were to modify an element within p2.pet_names, that would
+	// also modify the same element in p3.pet_names (and vice-versa)
+	
+	// Problem 2: Double free on destructor calls
+
+	// Deep copy: Rather than copying surface-level pointers, create NEW
+	// pointers that point to NEW arrays, and then initialize the data
+	// within those NEW arrays to "look identical" to the data in the
+	// object's corresponding arrays
+	
+	// If you don't define a copy constructor for a class, the compiler
+	// will automatically generate one for you that does a shallow copy
+
+	p3 = p2; // This calls the copy assignment operator
+
+	// If you don't define a copy assignment operator overload (AOO)
+	// for your class, the compiler will automatically generate one for you
+	// that does a shallow copy
 }

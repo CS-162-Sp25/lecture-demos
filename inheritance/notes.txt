@@ -1,0 +1,17 @@
+Member variables express "has-a" relationships
+
+Inheritance lets you express "is-a" relationships
+
+"Vampires are monsters". "A vampire is-a monster".
+
+"A zombie is-a monster"
+
+When a class inherits from another class, the class doing the inheriting
+is the "derived class", and the class being inherited from is the "base class".
+
+Derived class = child class = subclass
+Base class = parent class = superclass
+
+When one class inherits from another class, it inherits everything from that class.
+HOWEVER, members that are private to the "base class" can only be accessed by
+member functions of the base class.

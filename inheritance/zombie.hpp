@@ -8,6 +8,9 @@ class zombie : public monster {
 private:
 	// This is called "extension".
 	int sanity = 10;
+public:
+	zombie();
+	void attack_player(player& p);
 };
 
 #endif

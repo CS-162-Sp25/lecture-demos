@@ -9,6 +9,9 @@ class vampire : public monster {
 public:
 	vampire();
 	void suck_blood(player &p);
+
+	// Overriding. Must match the header from the base class.
+	void attack_player(player& p);
 };
 
 #endif

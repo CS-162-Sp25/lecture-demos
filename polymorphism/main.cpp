@@ -9,6 +9,23 @@ void do_turns(
 		int n_monsters,
 		player& p) {
 	for (int i = 0; i < n_monsters; i++) {
+		// The computer needs to "bind" this function call to
+		// a specific function definition
+		//
+		// All the compiler can do is bind this function call
+		// to the generic monster::attack_player() function.
+		// This is called "static binding" or "early binding"
+
+		// By default, all function calls are bound statically.
+		// You can, on a function-by-function basis, tell the compiler
+		// NOT to bind function calls of that function, and to instead
+		// WAIT UNTIL RUNTIME to bind them dynamically. "Dynamic binding",
+		// or "late binding".
+
+		// Every pointer / reference variable actually has two types:
+		// 1. Static type: The declared type
+		// 2. Dynamic type: The original type of the poitner / reference
+		// 	before being upcasted (potentially)
 		monsters[i]->attack_player(p);
 	}
 }
@@ -35,11 +52,6 @@ int main() {
 		zombie* z = new zombie;
 		monsters[i + n_vampires] = z;
 	}
-
-	// The 11th monster in the array was constructed from a zombie object
-	// z, but it does NOT have a sanity member variable. That was sliced
-	// away.
-	monsters[10].attack_player(p);
 
 	std::cout << "Player's remaining HP: " << p.hp << std::endl;
 

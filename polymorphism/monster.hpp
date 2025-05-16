@@ -3,6 +3,8 @@
 
 #include "player.hpp"
 
+// Any class that has AT LEAST ONE pure vitual function is said to be
+// an "abstract class". Abstract classes cannot be initialized or declared.
 class monster {
 // private: Only accessible by member functions of THIS class
 // public: Accessible everywhere
@@ -13,7 +15,7 @@ protected:
 public:
 	monster() = default;
 	monster(int hp);
-	void attack_player(player& p);
+	virtual void attack_player(player& p) = 0; // This marks the function as "pure virtual"
 };
 
 #endif

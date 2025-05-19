@@ -60,4 +60,18 @@ int main() {
 	}
 
 	std::cout << "Player's remaining HP: " << p.hp << std::endl;
+
+	// 1. Every monster object ever created must have an attack_player() function
+	// 2. The generic monster class does not have an attack_player() function
+	// Conclusion: Generic monster objects cannot be created!
+	// This is why we call it an "abstract class".
+	// monster m; // This is a syntax error
+	// m.attack_player(p);
+	
+	// Suppose I want to create a copy of monsters[0]
+	monster* obj_copy = monsters[0]->clone(); // Copies the pointer
+
+	for (int i = 0; i < n_monsters; i++) {
+		delete monsters[i];
+	}
 }

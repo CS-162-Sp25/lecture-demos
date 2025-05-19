@@ -20,3 +20,7 @@ void vampire::suck_blood(player& p) {
 	std::cout << "I vant to suck your blood!" << std::endl;
 	std::cout << this->hp << std::endl;
 }
+
+monster* vampire::clone() const {
+	return new vampire(*this);
+}

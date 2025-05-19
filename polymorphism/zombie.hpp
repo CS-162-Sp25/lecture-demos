@@ -11,6 +11,7 @@ private:
 public:
 	zombie();
 	void attack_player(player& p);
+	virtual monster* clone() const = 0;
 };
 
 #endif

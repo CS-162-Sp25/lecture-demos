@@ -16,6 +16,8 @@ public:
 	monster() = default;
 	monster(int hp);
 	virtual void attack_player(player& p) = 0; // This marks the function as "pure virtual"
+	virtual monster* clone() const = 0;
+	virtual ~monster() = default;
 };
 
 #endif

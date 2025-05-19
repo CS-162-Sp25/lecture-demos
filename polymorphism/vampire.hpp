@@ -12,6 +12,7 @@ public:
 
 	// Overriding. Must match the header from the base class.
 	void attack_player(player& p);
+	virtual monster* clone() const = 0;
 };
 
 #endif

@@ -9,3 +9,7 @@ void zombie::attack_player(player& p) {
 }
 
 zombie::zombie() : monster(20) {}
+
+monster* zombie::clone() const {
+	return new zombie(*this);
+}
